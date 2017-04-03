@@ -37,3 +37,4 @@ function _counter(className, during) {
         }, 1000)
     }
 }
+//version 0.9
