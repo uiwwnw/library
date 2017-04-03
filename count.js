@@ -30,7 +30,8 @@ function _counter(className, during) {
         setTimeout(function () {
             clearInterval(id);
             clearInterval(a);
-        }, during + speed * 5);
+        }, during * 2);
+        // 'during * 2' is complementary code about delay time.          
         var a = setInterval(function () {
             console.log(t++, counter_item_txt[0]);
         }, 1000)
