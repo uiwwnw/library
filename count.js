@@ -1,40 +1,149 @@
-/**
- * Created by uiwwnw on 2017-04-03.
- */
-function _counter(className, during) {
+/** * Created by uiwwnw on 2017-04-03.*/
+function counter(className, during) {
     (during === undefined) && (during = 1000);
-    var counter_item = document.getElementsByClassName(className);
-    var counter_item_length = counter_item.length;
-    var counter_item_txt = [];
-    var si;
-    var t = 1;
-    for (var i = 0; i < counter_item_length; i++) {
-        counter_item_txt.push(counter_item[i].innerHTML);
-        counter_item[i].innerHTML = 0;
-        spd(counter_item_txt[i], i);
+    var cut = {};
+    cut.dom = document.getElementsByClassName(className);
+    cut.length = cut.dom.length;
+    cut.position = [];
+    cut.txt = [];
+    cut.switch = 0;
+    cut.check = 0;
+    cut.during = during;
+    cut.body = {};
+    // cut.si = {};
+    _counter.init(cut);
+    _counter.sizeCheck(cut);
+    _counter.check(cut);
+    _counter.refresh();
+};
+var _counter = {
+    init: function (cut) {
+        for (var i = 0; i < cut.length; i++) {
+            cut.txt.push(cut.dom[i].innerHTML);
+            cut.position.push(cut.dom[i].offsetTop);
+        }
+        return cut;
     }
-    function spd(setNum, idx) {
-        var num = setNum / during * 10;
-        var speed = setNum / num / during * 100;
+    , check: function (cut) {
+        document.addEventListener("scroll", function () {
+            cut.body.y = window.scrollY;
+            for (var i = cut.length - 1; i >= 0; i--) {
+                if (cut.position[i] - cut.body.height / 2 < cut.body.y) {
+                    cut.check = i;
+                    _counter.start(cut);
+                    return false;
+                }
+            }
+        });
+    }
+    , setup: function (cut, idx) {
+        var num = cut.txt[idx] / cut.during * 10;
+        cut.speed = cut.txt[idx] / num / cut.during * 100;
         var displayNum = 0;
-        console.log(idx, speed, num);
-        si = setInterval(function () {
+        var si = setInterval(function () {
             displayNum = displayNum + num;
-            counter_item[idx].innerHTML = Math.ceil(displayNum);
-            if (displayNum >= setNum) return counter_item[idx].innerHTML = setNum;
-        }, speed);
-        stop(si, during, speed)
+            cut.dom[idx].innerHTML = Math.ceil(displayNum);
+            if (displayNum >= cut.txt[idx]) return cut.dom[idx].innerHTML = cut.txt[idx];
+        }, cut.speed);
+        this.stop(cut, si)
     }
-
-    function stop(id, during, speed) {
+    , start: function (cut) {
+        for (var i = cut.switch; i <= cut.check; i++) {
+            cut.dom[i].innerHTML = 0;
+            this.setup(cut, i);
+        }
+        cut.switch = cut.check + 1;
+    }
+    , stop: function (cut, si) {
         setTimeout(function () {
-            clearInterval(id);
-            clearInterval(a);
-        }, during * 2);
-        // 'during * 2' is complementary code about delay time.          
-        var a = setInterval(function () {
-            console.log(t++, counter_item_txt[0]);
-        }, 1000)
+            clearInterval(si);
+        }, cut.during * 1.1);
     }
-}
-//version 0.9
+    , sizeCheck: function (cut) {
+        cut.body.width = window.innerWidth
+            || document.documentElement.clientWidth
+            || document.body.clientWidth;
+
+        cut.body.height = window.innerHeight
+            || document.documentElement.clientHeight
+            || document.body.clientHeight;
+        return cut;
+    }
+    , refresh: function () {
+        document.addEventListener("resize", function () {
+            _counter.sizeCheck();
+        }, false);
+    }
+};
+// function _counter(className, during) {
+//     (during === undefined) && (during = 1000);
+//     var counter_item = document.getElementsByClassName(className);
+//     var counter_item_length = counter_item.length;
+//     var counter_position = [];
+//     var counter_switch = 0;
+//     var bodySize = {};
+//     var bodyScroll = {};
+//     var counter_item_txt = [];
+//     var si;
+//     var position;
+//     for (var i = 0; i < counter_item_length; i++) {
+//         counter_item_txt.push(counter_item[i].innerHTML);
+//         counter_position.push(counter_item[i].offsetTop);
+//     }
+//     function spd(setNum, idx) {
+//         var num = setNum / during * 10;
+//         var speed = setNum / num / during * 100;
+//         var displayNum = 0;
+//         si = setInterval(function () {
+//             displayNum = displayNum + num;
+//             counter_item[idx].innerHTML = Math.ceil(displayNum);
+//             if (displayNum >= setNum) return counter_item[idx].innerHTML = setNum;
+//         }, speed);
+//         stop(si, during, speed)
+//     }
+//
+//     function stop(id, during, speed) {
+//         setTimeout(function () {
+//             clearInterval(id);
+//         }, during + speed * 5);
+//         // '+ speed * 3' is complementary code about delay time.
+//     }
+//
+//     function size() {
+//         bodySize.width = window.innerWidth
+//             || document.documentElement.clientWidth
+//             || document.body.clientWidth;
+//
+//         bodySize.height = window.innerHeight
+//             || document.documentElement.clientHeight
+//             || document.body.clientHeight;
+//         return bodySize;
+//     }
+//
+//     function start(position) {
+//         for (var i = counter_switch; i <= position; i++) {
+//             counter_item[i].innerHTML = 0;
+//             spd(counter_item_txt[i], i);
+//         }
+//         counter_switch = position + 2;
+//         console.log(counter_switch)
+//     }
+//
+//     document.addEventListener("scroll", function () {
+//         bodyScroll.y = window.scrollY;
+//         if (counter_position[position] < bodyScroll.y) {
+//             start(position)
+//         }
+//         for (var i = counter_item_length - 1; i >= 0; i--) {
+//             if (counter_position[i] < bodyScroll.y) {
+//                 position = i;
+//                 return false;
+//             }
+//         }
+//     });
+//     document.addEventListener("resize", function () {
+//         size();
+//     }, false);
+//     // size();
+// }
+//version 0.2
