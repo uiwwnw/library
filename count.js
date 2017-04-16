@@ -31,7 +31,10 @@ var _counter = {
         document.addEventListener("scroll", function () {
             cut.body.y = window.scrollY;
             for (var i = cut.length; i >= 0; i--) {
-                if (cut.position[i] - cut.body.height / 2 < cut.body.y) {
+                if(cut.body.y === 0){
+                    cut.check = -1;
+                    _counter.start(cut);
+                }else if (cut.position[i] - cut.body.height / 2 < cut.body.y) {
                     cut.check = i - 1;
                     // console.log(cut.check)
                     _counter.start(cut);
