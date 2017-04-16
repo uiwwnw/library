@@ -22,14 +22,18 @@ var _counter = {
             cut.txt.push(cut.dom[i].innerHTML);
             cut.position.push(cut.dom[i].offsetTop);
         }
+        var zeroIndex = cut.dom[0].offsetTop - 200;
+        if(zeroIndex < 0){zeroIndex = 0}
+        cut.position.unshift(zeroIndex);
         return cut;
     }
     , check: function (cut) {
         document.addEventListener("scroll", function () {
             cut.body.y = window.scrollY;
-            for (var i = cut.length - 1; i >= 0; i--) {
+            for (var i = cut.length; i >= 0; i--) {
                 if (cut.position[i] - cut.body.height / 2 < cut.body.y) {
-                    cut.check = i;
+                    cut.check = i - 1;
+                    // console.log(cut.check)
                     _counter.start(cut);
                     return false;
                 }
