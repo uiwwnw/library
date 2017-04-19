@@ -7,4 +7,4 @@ This code is a library that counts the number.
 http://codepen.io/uiwwnw/pen/jBddOR
 
 
-version 0.3
+version 0.33

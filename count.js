@@ -80,7 +80,7 @@ var _counter = {
     , stop: function (cut, si) {
         setTimeout(function () {
             clearInterval(si);
-        }, cut.during * 1.1);
+        }, cut.during * 1.5);
     }
     , sizeCheck: function (cut) {
         cut.body.width = window.innerWidth
@@ -97,5 +97,5 @@ var _counter = {
         }, false);
     }
 };
-// version 0.3
+// version 0.33
 // https://github.com/uiwwnw/scrollcounter
