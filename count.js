@@ -2,7 +2,7 @@
 function counter(elem, during) {
     (during === undefined) && (during = 1000);
     var cut = {};
-    elem_return(elem,cut);
+    elem_return(elem, cut);
     cut.length = cut.dom.length;
     cut.position = [];
     cut.txt = [];
@@ -19,7 +19,7 @@ function word_return(elem) {
     cssElem = elem.replace('.', '').replace('#', '').trim();
     return cssElem;
 }
-function elem_return(elem,cut){
+function elem_return(elem, cut) {
     word_return(elem);
     if (elem.match('.')) {
         cut.dom = document.getElementsByClassName(cssElem);
@@ -86,7 +86,6 @@ var _counter = {
         cut.body.width = window.innerWidth
             || document.documentElement.clientWidth
             || document.body.clientWidth;
-
         cut.body.height = window.innerHeight
             || document.documentElement.clientHeight
             || document.body.clientHeight;
@@ -98,75 +97,5 @@ var _counter = {
         }, false);
     }
 };
-// function _counter(elem, during) {
-//     (during === undefined) && (during = 1000);
-//     var counter_item = document.getElementsByClassName(elem);
-//     var counter_item_length = counter_item.length;
-//     var counter_position = [];
-//     var counter_switch = 0;
-//     var bodySize = {};
-//     var bodyScroll = {};
-//     var counter_item_txt = [];
-//     var si;
-//     var position;
-//     for (var i = 0; i < counter_item_length; i++) {
-//         counter_item_txt.push(counter_item[i].innerHTML);
-//         counter_position.push(counter_item[i].offsetTop);
-//     }
-//     function spd(setNum, idx) {
-//         var num = setNum / during * 10;
-//         var speed = setNum / num / during * 100;
-//         var displayNum = 0;
-//         si = setInterval(function () {
-//             displayNum = displayNum + num;
-//             counter_item[idx].innerHTML = Math.ceil(displayNum);
-//             if (displayNum >= setNum) return counter_item[idx].innerHTML = setNum;
-//         }, speed);
-//         stop(si, during, speed)
-//     }
-//
-//     function stop(id, during, speed) {
-//         setTimeout(function () {
-//             clearInterval(id);
-//         }, during + speed * 5);
-//         // '+ speed * 3' is complementary code about delay time.
-//     }
-//
-//     function size() {
-//         bodySize.width = window.innerWidth
-//             || document.documentElement.clientWidth
-//             || document.body.clientWidth;
-//
-//         bodySize.height = window.innerHeight
-//             || document.documentElement.clientHeight
-//             || document.body.clientHeight;
-//         return bodySize;
-//     }
-//
-//     function start(position) {
-//         for (var i = counter_switch; i <= position; i++) {
-//             counter_item[i].innerHTML = 0;
-//             spd(counter_item_txt[i], i);
-//         }
-//         counter_switch = position + 2;
-//         console.log(counter_switch)
-//     }
-//
-//     document.addEventListener("scroll", function () {
-//         bodyScroll.y = window.scrollY;
-//         if (counter_position[position] < bodyScroll.y) {
-//             start(position)
-//         }
-//         for (var i = counter_item_length - 1; i >= 0; i--) {
-//             if (counter_position[i] < bodyScroll.y) {
-//                 position = i;
-//                 return false;
-//             }
-//         }
-//     });
-//     document.addEventListener("resize", function () {
-//         size();
-//     }, false);
-//     // size();
-// }
-//version 0.2
+// version 0.3
+// https://github.com/uiwwnw/library
