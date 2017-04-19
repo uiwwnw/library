@@ -98,4 +98,4 @@ var _counter = {
     }
 };
 // version 0.3
-// https://github.com/uiwwnw/library
+// https://github.com/uiwwnw/scrollcounter

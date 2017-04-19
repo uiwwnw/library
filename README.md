@@ -1,4 +1,4 @@
-# library
+# scrollcounter
 javascript library.
 
 This code is a library that counts the number.
@@ -7,4 +7,4 @@ This code is a library that counts the number.
 http://codepen.io/uiwwnw/pen/jBddOR
 
 
-version 0.2
+version 0.3
