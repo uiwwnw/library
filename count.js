@@ -1,8 +1,17 @@
 /** * Created by uiwwnw on 2017-04-03.*/
-function counter(className, during) {
+function counter(elem, during) {
     (during === undefined) && (during = 1000);
     var cut = {};
-    cut.dom = document.getElementsByClassName(className);
+    if (elem.match('.')) {
+        elem = elem.replace('.', '').trim();
+        cut.dom = document.getElementsByClassName(elem);
+    } else if (elem.match('#')) {
+        elem = elem.replace('#', '').trim();
+        cut.dom = document.getElementById(elem);
+    } else {
+        cut.dom = document.getElementsByTagName(elem);
+    }
+    console.log(cut.dom);
     cut.length = cut.dom.length;
     cut.position = [];
     cut.txt = [];
@@ -10,7 +19,6 @@ function counter(className, during) {
     cut.check = 0;
     cut.during = during;
     cut.body = {};
-    // cut.si = {};
     _counter.init(cut);
     _counter.sizeCheck(cut);
     _counter.check(cut);
@@ -23,7 +31,9 @@ var _counter = {
             cut.position.push(cut.dom[i].offsetTop);
         }
         var zeroIndex = cut.dom[0].offsetTop - 200;
-        if(zeroIndex < 0){zeroIndex = 0}
+        if (zeroIndex < 0) {
+            zeroIndex = 0
+        }
         cut.position.unshift(zeroIndex);
         return cut;
     }
@@ -31,10 +41,10 @@ var _counter = {
         document.addEventListener("scroll", function () {
             cut.body.y = window.scrollY;
             for (var i = cut.length; i >= 0; i--) {
-                if(cut.body.y === 0){
+                if (cut.body.y === 0) {
                     cut.check = -1;
                     _counter.start(cut);
-                }else if (cut.position[i] - cut.body.height / 2 < cut.body.y) {
+                } else if (cut.position[i] - cut.body.height / 2 < cut.body.y) {
                     cut.check = i - 1;
                     // console.log(cut.check)
                     _counter.start(cut);
@@ -82,9 +92,9 @@ var _counter = {
         }, false);
     }
 };
-// function _counter(className, during) {
+// function _counter(elem, during) {
 //     (during === undefined) && (during = 1000);
-//     var counter_item = document.getElementsByClassName(className);
+//     var counter_item = document.getElementsByClassName(elem);
 //     var counter_item_length = counter_item.length;
 //     var counter_position = [];
 //     var counter_switch = 0;
