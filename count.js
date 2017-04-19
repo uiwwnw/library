@@ -11,7 +11,6 @@ function counter(elem, during) {
     } else {
         cut.dom = document.getElementsByTagName(elem);
     }
-    console.log(cut.dom);
     cut.length = cut.dom.length;
     cut.position = [];
     cut.txt = [];
