@@ -2,15 +2,7 @@
 function counter(elem, during) {
     (during === undefined) && (during = 1000);
     var cut = {};
-    if (elem.match('.')) {
-        elem = elem.replace('.', '').trim();
-        cut.dom = document.getElementsByClassName(elem);
-    } else if (elem.match('#')) {
-        elem = elem.replace('#', '').trim();
-        cut.dom = document.getElementById(elem);
-    } else {
-        cut.dom = document.getElementsByTagName(elem);
-    }
+    elem_return(elem,cut);
     cut.length = cut.dom.length;
     cut.position = [];
     cut.txt = [];
@@ -23,6 +15,21 @@ function counter(elem, during) {
     _counter.check(cut);
     _counter.refresh();
 };
+function word_return(elem) {
+    cssElem = elem.replace('.', '').replace('#', '').trim();
+    return cssElem;
+}
+function elem_return(elem,cut){
+    word_return(elem);
+    if (elem.match('.')) {
+        cut.dom = document.getElementsByClassName(cssElem);
+    } else if (elem.match('#')) {
+        cut.dom = document.getElementById(cssElem);
+    } else {
+        cut.dom = document.getElementsByTagName(elem);
+    }
+    return cut;
+}
 var _counter = {
     init: function (cut) {
         for (var i = 0; i < cut.length; i++) {
