@@ -45,7 +45,9 @@ var counter = function (elem, during) {
         check: function (cut) {
             document.addEventListener("scroll", function () {
                 var i = cut.length;
-                cut.body.y = window.scrollY;
+                cut.body.y = window.scrollY //Modern Way (Chrome, Firefox)
+                    || window.pageYOffset //(Modern IE, including IE11
+                || document.documentElement.scrollTop; //(Old IE, 6,7,8)
                 for (i; i >= 0; i -= 1) {
                     if (cut.body.y === 0) {
                         cut.check = -1;
@@ -67,12 +69,12 @@ var counter = function (elem, during) {
                 displayNum = displayNum + num;
                 cut.dom[idx].innerHTML = Math.ceil(displayNum);
                 if (displayNum >= cut.txt[idx]) {
-                    clearInterval(si);
                     cut.dom[idx].innerHTML = cut.txt[idx];
+                    clearInterval(si);
                     return false;
                 }
             }, cut.speed);
-            counters.prototype.stop(cut, si);
+            // counters.prototype.stop(cut, si);
         },
         start: function (cut) {
             var i = cut.swit;
@@ -82,11 +84,11 @@ var counter = function (elem, during) {
             }
             cut.swit = cut.check + 1;
         },
-        stop: function (cut, si) {
-            setTimeout(function () {
-                clearInterval(si);
-            }, cut.during * 1.5);
-        },
+        // stop: function (cut, si) {
+        //     setTimeout(function () {
+        //         clearInterval(si);
+        //     }, cut.during * 1.5);
+        // },
         sizeCheck: function (cut) {
             cut.body.width = window.innerWidth ||
                 document.documentElement.clientWidth ||
